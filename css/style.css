@@ -1,1 +1,515 @@
+/* Font Michroma dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
 
+/* Definisi Warna Dasar dan Variasi Brightness menggunakan HSL */
+:root {
+    /* Base Hue dan Saturation untuk Violet dan Plum */
+    --hue-violet: 270; /* Purple hue */
+    --hue-plum: 300;   /* Magenta-purple hue */
+    --saturation-main: 70%; /* Main saturation for vibrant elements */
+    --saturation-desaturated: 10%; /* For backgrounds, text, borders */
+
+    /* Light Theme Colors (semua berasal dari hue violet/plum) */
+    --light-body-bg: hsl(var(--hue-violet), var(--saturation-desaturated), 98%); /* Sangat terang, hint violet */
+    --light-card-bg: hsl(var(--hue-violet), 5%, 99%);  /* Hampir putih, hint of violet */
+    --light-text-primary: hsl(var(--hue-violet), 40%, 20%); /* Dark violet-grey */
+    --light-text-secondary: hsl(var(--hue-violet), 20%, 40%); /* Mid violet-grey */
+    --light-border: hsl(var(--hue-violet), var(--saturation-desaturated), 85%); /* Light violet-grey border */
+
+    --light-button-primary-bg: hsl(var(--hue-violet), var(--saturation-main), 40%); /* Main violet */
+    --light-button-primary-hover: hsl(var(--hue-violet), var(--saturation-main), 30%); /* Darker violet */
+    --light-button-secondary-bg: hsl(var(--hue-plum), var(--saturation-main), 70%); /* Light plum */
+    --light-button-secondary-hover: hsl(var(--hue-plum), var(--saturation-main), 60%); /* Darker light plum */
+
+    /* Warna untuk Income/Expense (tetap hijau/merah, tapi bisa disesuaikan saturasi/lightness) */
+    --light-income-bg: hsl(120, 50%, 90%); /* Desaturated light green */
+    --light-expense-bg: hsl(0, 50%, 90%); /* Desaturated light red */
+    --light-income-text: hsl(120, 60%, 40%); /* Standard green for text */
+    --light-expense-text: hsl(0, 60%, 40%); /* Standard red for text */
+
+    /* Warna pesan */
+    --light-message-success-bg: hsl(120, 50%, 90%);
+    --light-message-success-text: hsl(120, 60%, 40%);
+    --light-message-error-bg: hsl(0, 50%, 90%);
+    --light-message-error-text: hsl(0, 60%, 40%);
+    --light-message-info-bg: hsl(var(--hue-violet), var(--saturation-desaturated), 85%);
+    --light-message-info-text: hsl(var(--hue-violet), 20%, 40%);
+
+    --light-clear-button-bg: hsl(var(--hue-violet), var(--saturation-desaturated), 80%); /* Light violet-grey */
+    --light-clear-button-text: hsl(var(--hue-violet), 40%, 20%); /* Dark violet-grey */
+    --light-clear-button-hover: hsl(var(--hue-violet), var(--saturation-desaturated), 70%); /* Slightly darker */
+
+    /* Dark Theme Colors */
+    --dark-body-bg: hsl(var(--hue-violet), 20%, 8%); /* Very dark violet */
+    --dark-card-bg: hsl(var(--hue-violet), 30%, 15%); /* Darker violet */
+    --dark-text-primary: hsl(var(--hue-violet), 20%, 90%); /* Light violet-grey */
+    --dark-text-secondary: hsl(var(--hue-violet), 10%, 70%); /* Mid light violet-grey */
+    --dark-border: hsl(var(--hue-violet), 20%, 30%); /* Dark violet border */
+
+    --dark-button-primary-bg: hsl(var(--hue-violet), var(--saturation-main), 60%); /* Brighter violet */
+    --dark-button-primary-hover: hsl(var(--hue-violet), var(--saturation-main), 50%); /* Slightly darker */
+    --dark-button-secondary-bg: hsl(var(--hue-plum), var(--saturation-main), 50%); /* Brighter plum */
+    --dark-button-secondary-hover: hsl(var(--hue-plum), var(--saturation-main), 40%); /* Slightly darker */
+
+    --dark-income-bg: hsl(120, 30%, 20%); /* Desaturated dark green */
+    --dark-expense-bg: hsl(0, 30%, 20%); /* Desaturated dark red */
+    --dark-income-text: hsl(120, 60%, 70%); /* Lighter green for text */
+    --dark-expense-text: hsl(0, 60%, 70%); /* Lighter red for text */
+
+    --dark-message-success-bg: hsl(120, 30%, 20%);
+    --dark-message-success-text: hsl(120, 60%, 70%);
+    --dark-message-error-bg: hsl(0, 30%, 20%);
+    --dark-message-error-text: hsl(0, 60%, 70%);
+    --dark-message-info-bg: hsl(var(--hue-violet), 20%, 30%);
+    --dark-message-info-text: hsl(var(--hue-violet), 10%, 70%);
+
+    --dark-clear-button-bg: hsl(var(--hue-violet), 20%, 35%);
+    --dark-clear-button-text: hsl(var(--hue-violet), 20%, 90%);
+    --dark-clear-button-hover: hsl(var(--hue-violet), 20%, 45%);
+}
+
+/* Global Styles & Transitions */
+body {
+    font-family: 'Michroma', sans-serif; /* Menggunakan font Michroma */
+    margin: 0;
+    padding: 1rem; /* Padding lebih kecil untuk mobile */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--light-body-bg);
+    color: var(--light-text-primary);
+    /* Transisi GSAP akan menangani perubahan warna */
+}
+
+/* App Card Styles */
+.app-card {
+    background-color: var(--light-card-bg);
+    padding: 1.5rem; /* Padding lebih kecil untuk mobile */
+    border-radius: 34px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Lebar penuh */
+    max-width: 400px; /* Batas lebar untuk desktop */
+    border: 1px solid var(--light-border);
+    box-sizing: border-box; /* Pastikan padding termasuk dalam lebar */
+    /* Transisi GSAP akan menangani perubahan warna */
+}
+
+/* Main Title */
+.main-title {
+    font-size: 2.25rem; /* text-3xl */
+    font-weight: 700; /* font-bold */
+    text-align: center;
+    margin-bottom: 1.5rem; /* mb-6 */
+    color: var(--light-button-primary-bg);
+}
+
+/* Balance Area */
+.balance-card {
+    background-color: var(--light-button-primary-bg);
+    color: white;
+    padding: 1.25rem;
+    border-radius: 34px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+.balance-label {
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    opacity: 0.9;
+}
+.balance-amount {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 800; /* font-extrabold */
+    margin-top: 0.25rem; /* mt-1 */
+}
+
+
+/* Input Group Styles */
+.input-group {
+    margin-bottom: 1rem;
+}
+.input-label {
+    display: block;
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    color: var(--light-text-secondary);
+    margin-bottom: 0.25rem; /* mb-1 */
+}
+.input-field {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--light-border);
+    border-radius: 34px;
+    background-color: var(--light-card-bg);
+    color: var(--light-text-primary);
+    transition: box-shadow 0.2s ease-in-out; /* Keep CSS transition for focus shadow */
+    box-sizing: border-box; /* Pastikan padding termasuk dalam lebar */
+    /* Transisi GSAP akan menangani perubahan warna */
+}
+.input-field:focus {
+    outline: none;
+    border-color: var(--light-button-primary-bg);
+    box-shadow: 0 0 0 3px hsla(var(--hue-violet), var(--saturation-main), 40%, 0.3); /* Violet shadow */
+}
+.input-field::placeholder {
+    color: var(--light-text-secondary);
+    opacity: 0.7;
+}
+
+/* Button Styles */
+.button {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 34px;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease-in-out; /* Keep CSS transition for hover shadow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem; /* Ukuran font standar */
+    box-sizing: border-box; /* Pastikan padding termasuk dalam lebar */
+}
+
+.button-primary {
+    background-color: var(--light-button-primary-bg);
+    color: white; /* Text color for primary button is always white for contrast */
+}
+.button-primary:hover {
+    background-color: var(--light-button-primary-hover);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button-secondary {
+    background-color: var(--light-button-secondary-bg);
+    color: var(--light-text-primary);
+}
+.button-secondary:hover {
+    background-color: var(--light-button-secondary-hover);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.clear-button {
+    background-color: var(--light-clear-button-bg);
+    color: var(--light-clear-button-text);
+}
+.clear-button:hover {
+    background-color: var(--light-clear-button-hover);
+}
+
+/* Flex container for add income/expense buttons */
+.button-group {
+    display: flex;
+    flex-direction: column; /* Stack vertically by default */
+    gap: 0.75rem;
+    margin-bottom: 1.5rem; /* mb-6 */
+}
+.transaction-form-card .button-group {
+    margin-bottom: 0; /* Override for this specific group */
+}
+
+
+/* Section Titles */
+.section-title {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 600; /* font-semibold */
+    color: var(--light-text-secondary);
+    margin-bottom: 1rem; /* mb-4 */
+}
+
+/* Transaction List Item Styles */
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: 34px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid;
+    margin-bottom: 0.75rem; /* space-y-3 */
+    /* Transisi GSAP akan menangani perubahan warna */
+}
+.transaction-item-income {
+    background-color: var(--light-income-bg);
+    border-color: var(--light-income-bg);
+}
+.transaction-item-expense {
+    background-color: var(--light-expense-bg);
+    border-color: var(--light-expense-bg);
+}
+.transaction-amount-income {
+    color: var(--light-income-text);
+}
+.transaction-amount-expense {
+    color: var(--light-expense-text);
+}
+.transaction-item p {
+    margin: 0; /* Remove default paragraph margins */
+}
+.transaction-item div p:first-child {
+    font-weight: 500;
+    color: var(--light-text-primary);
+}
+.transaction-item div p:last-child {
+    font-size: 0.75rem;
+    color: var(--light-text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* No Transactions Message */
+.no-transactions-message {
+    color: var(--light-text-secondary);
+    text-align: center;
+    padding: 1rem 0;
+}
+
+/* Message Box Styles */
+.message-box {
+    padding: 0.75rem;
+    border-radius: 34px;
+    text-align: center;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+    /* Transisi GSAP akan menangani perubahan warna */
+}
+.message-box.success {
+    background-color: var(--light-message-success-bg);
+    color: var(--light-message-success-text);
+}
+.message-box.error {
+    background-color: var(--light-message-error-bg);
+    color: var(--light-message-error-text);
+}
+.message-box.info {
+    background-color: var(--light-message-info-bg);
+    color: var(--light-message-info-text);
+}
+.hidden {
+    display: none;
+}
+
+/* Warning Text */
+.warning-text {
+    color: var(--light-expense-text);
+    font-size: 0.75rem;
+    margin-top: 0.75rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Scrollbar Customization */
+#transaction-list {
+    max-height: 15rem;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+#transaction-list::-webkit-scrollbar {
+    width: 8px;
+}
+#transaction-list::-webkit-scrollbar-track {
+    background: var(--light-border);
+    border-radius: 10px;
+}
+#transaction-list::-webkit-scrollbar-thumb {
+    background: var(--light-button-secondary-bg);
+    border-radius: 10px;
+}
+#transaction-list::-webkit-scrollbar-thumb:hover {
+    background: var(--light-button-secondary-hover);
+}
+
+/* Dark Mode Overrides */
+html.dark {
+    /* Warna untuk Dark Mode */
+    --light-body-bg: var(--dark-body-bg);
+    --light-card-bg: var(--dark-card-bg);
+    --light-text-primary: var(--dark-text-primary);
+    --light-text-secondary: var(--dark-text-secondary);
+    --light-border: var(--dark-border);
+
+    --light-button-primary-bg: var(--dark-button-primary-bg);
+    --light-button-primary-hover: var(--dark-button-primary-hover);
+    --light-button-secondary-bg: var(--dark-button-secondary-bg);
+    --light-button-secondary-hover: var(--dark-button-secondary-hover);
+
+    --light-income-bg: var(--dark-income-bg);
+    --light-expense-bg: var(--dark-expense-bg);
+    --light-income-text: var(--dark-income-text);
+    --light-expense-text: var(--dark-expense-text);
+
+    --light-message-success-bg: var(--dark-message-success-bg);
+    --light-message-success-text: var(--dark-message-success-text);
+    --light-message-error-bg: var(--dark-message-error-bg);
+    --light-message-error-text: var(--dark-message-error-text);
+    --light-message-info-bg: var(--dark-message-info-bg);
+    --light-message-info-text: var(--dark-message-info-text);
+
+    --light-clear-button-bg: var(--dark-clear-button-bg);
+    --light-clear-button-text: var(--dark-clear-button-text);
+    --light-clear-button-hover: var(--dark-clear-button-hover);
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Overlay gelap */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+}
+.modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-content {
+    background-color: var(--light-card-bg);
+    padding: 2rem;
+    border-radius: 34px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%; /* Lebar default untuk mobile */
+    max-width: 400px; /* Batas lebar untuk desktop */
+    transform: translateY(-20px);
+    opacity: 0;
+    border: 1px solid var(--light-border);
+    box-sizing: border-box;
+}
+.modal-overlay.open .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Modal Specific Layout */
+.modal-content .button-group {
+    margin-bottom: 1.5rem; /* Consistent spacing */
+}
+.modal-content .button-group:last-of-type {
+    margin-bottom: 0; /* No margin-bottom for the last group */
+}
+.modal-content .setting-group {
+    margin-bottom: 1.5rem;
+}
+.modal-content .setting-group .input-label {
+    margin-bottom: 0.75rem; /* mb-3 */
+    font-size: 1.125rem; /* text-lg */
+    font-weight: 500; /* font-medium */
+}
+.modal-content .hint-text {
+    font-size: 0.75rem;
+    color: var(--light-text-secondary);
+    margin-top: 0.25rem;
+}
+.modal-content .flex-center-gap {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+
+/* Fix for hidden file input */
+#modal-restore-file-input {
+    /* Menggunakan properti visual untuk menyembunyikan */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    white-space: nowrap; /* Mencegah teks wrap */
+}
+
+/* Positioning for settings toggle button */
+#settings-toggle-container {
+    position: absolute;
+    top: 1rem; /* 16px */
+    right: 1rem; /* 16px */
+    z-index: 50;
+}
+
+/* Responsive Adjustments */
+
+/* Small devices (phones, 640px and below) */
+@media (max-width: 640px) {
+    body {
+        padding: 0.5rem; /* Padding lebih kecil lagi */
+    }
+    .app-card {
+        padding: 1rem; /* Padding lebih kecil lagi */
+    }
+    .button {
+        font-size: 0.9rem; /* Font tombol sedikit lebih kecil */
+    }
+    .main-title {
+        font-size: 2rem; /* Ukuran judul lebih kecil */
+    }
+    .balance-amount {
+        font-size: 2rem; /* Ukuran saldo lebih kecil */
+    }
+    .section-title { /* For h2 titles */
+        font-size: 1.125rem; /* text-xl -> 1.125rem */
+    }
+    #settings-toggle-container {
+        top: 0.75rem; /* Sedikit lebih kecil untuk mobile */
+        right: 0.75rem;
+    }
+    .modal-content {
+        padding: 1.5rem; /* Padding modal lebih kecil */
+    }
+    .modal-content .setting-group .input-label {
+        font-size: 1rem; /* Ukuran label di modal lebih kecil */
+    }
+}
+
+/* Medium devices (tablets, 641px to 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+    body {
+        padding: 1.5rem;
+    }
+    .app-card {
+        padding: 2rem;
+    }
+    .button-group {
+        flex-direction: row; /* Side-by-side for tablets */
+    }
+    .button {
+        flex: 1; /* Distribute space evenly */
+    }
+    #settings-toggle-container {
+        top: 1rem;
+        right: 1rem;
+    }
+}
+
+/* Large devices (desktops, 1025px and up) */
+@media (min-width: 1025px) {
+    body {
+        padding: 2rem;
+    }
+    .app-card {
+        padding: 2.5rem;
+    }
+    .button-group {
+        flex-direction: row; /* Side-by-side for desktops */
+    }
+    .button {
+        flex: 1; /* Distribute space evenly */
+    }
+    #settings-toggle-container {
+        top: 1.5rem; /* Lebih besar untuk desktop */
+        right: 1.5rem;
+    }
+}
