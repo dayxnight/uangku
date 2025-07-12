@@ -1,67 +1,51 @@
-// js/utils.js
-// Fungsi utilitas umum (enkripsi, dekripsi, pesan)
+// Utility functions
+class Utils {
+    static formatCurrency(amount) {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(amount);
+    }
 
-/**
- * Menampilkan pesan di kotak pesan UI dengan animasi GSAP.
- * @param {string} message - Pesan yang akan ditampilkan.
- * @param {string} type - Tipe pesan ('success', 'error', 'info').
- * @param {HTMLElement} boxElement - Elemen kotak pesan yang akan digunakan.
- */
-export function showMessage(message, type, boxElement) {
-    boxElement.textContent = message;
-    boxElement.classList.remove('hidden', 'success', 'error', 'info');
-    boxElement.classList.add(type);
+    static formatDate(dateString) {
+        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        return new Date(dateString).toLocaleDateString('id-ID', options);
+    }
 
-    gsap.fromTo(boxElement, { opacity: 0, y: 10, display: 'none' }, {
-        opacity: 1,
-        y: 0,
-        duration: 0.3,
-        ease: "power2.out",
-        display: 'block',
-        onComplete: () => {
-            gsap.to(boxElement, {
-                opacity: 0,
-                y: 10,
-                duration: 0.3,
-                delay: 4.5, // Tahan selama 4.5 detik sebelum fade out
-                ease: "power2.in",
-                onComplete: () => {
-                    boxElement.classList.add('hidden');
-                    boxElement.style.display = 'none'; // Pastikan display diset none setelah fade out
-                }
-            });
+    static getGreeting() {
+        const hour = new Date().getHours();
+        if (hour < 12) return 'Selamat Pagi';
+        if (hour < 15) return 'Selamat Siang';
+        if (hour < 18) return 'Selamat Sore';
+        return 'Selamat Malam';
+    }
+
+    static encryptData(data, password) {
+        try {
+            return CryptoJS.AES.encrypt(JSON.stringify(data), password).toString();
+        } catch (error) {
+            console.error('Encryption error:', error);
+            return null;
         }
-    });
-}
-
-/**
- * Mengenkripsi data menggunakan AES.
- * @param {string} data - String data yang akan dienkripsi.
- * @param {string} password - Kata sandi untuk enkripsi.
- * @returns {string} Data terenkripsi dalam format string.
- */
-export function encryptData(data, password) {
-    if (!password) {
-        throw new Error("Kata sandi enkripsi tidak boleh kosong.");
     }
-    return CryptoJS.AES.encrypt(data, password).toString();
-}
 
-/**
- * Mendekripsi data menggunakan AES.
- * @param {string} encryptedData - String data terenkripsi.
- * @param {string} password - Kata sandi untuk dekripsi.
- * @returns {string} Data terdekripsi dalam format string.
- */
-export function decryptData(encryptedData, password) {
-    if (!password) {
-        throw new Error("Kata sandi dekripsi tidak boleh kosong.");
+    static decryptData(ciphertext, password) {
+        try {
+            const bytes = CryptoJS.AES.decrypt(ciphertext, password);
+            return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        } catch (error) {
+            console.error('Decryption error:', error);
+            return null;
+        }
     }
-    const bytes = CryptoJS.AES.decrypt(encryptedData, password);
-    const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-    if (!decryptedText) {
-        throw new Error("Dekripsi gagal. Kata sandi salah atau data rusak.");
-    }
-    return decryptedText;
-}
 
+    static animateElement(element, animationType) {
+        gsap.from(element, {
+            duration: 0.5,
+            opacity: 0,
+            y: animationType === 'slideUp' ? 20 : (animationType === 'slideDown' ? -20 : 0),
+            ease: 'power2.out'
+        });
+    }
+}
