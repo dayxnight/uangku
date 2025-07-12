@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajer Keuangan Kakeibo</title>
+    <!-- Link ke file CSS kustom -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Tombol Pengaturan (Trigger Menu) -->
+    <div id="settings-toggle-container">
+        <button id="settings-toggle" class="button clear-button">
+            ⚙️
+        </button>
+    </div>
+
+    <!-- Layar Aplikasi Utama -->
+    <div id="app-screen" class="app-card">
+        <h1 class="main-title text-center">Kakeibo Saya 🌸</h1>
+
+        <!-- Area Saldo -->
+        <div class="balance-card">
+            <p class="balance-label">Saldo Saat Ini</p>
+            <p id="current-balance" class="balance-amount">Rp 0.00</p>
+        </div>
+
+        <!-- Formulir Transaksi -->
+        <div class="app-card transaction-form-card">
+            <h2 class="section-title">Catat Transaksi 📝</h2>
+            <div class="input-group">
+                <label for="description" class="input-label">Deskripsi</label>
+                <input type="text" id="description" placeholder="Makan siang, Gaji, dll." class="input-field" required>
+            </div>
+            <div class="input-group">
+                <label for="amount" class="input-label">Jumlah (Rp)</label>
+                <input type="number" id="amount" placeholder="Contoh: 50000" class="input-field" required min="0">
+            </div>
+            <div class="button-group">
+                <button id="add-income" class="button button-primary">
+                    <span>➕</span> Tambah Pemasukan
+                </button>
+                <button id="add-expense" class="button button-secondary">
+                    <span>➖</span> Tambah Pengeluaran
+                </button>
+            </div>
+        </div>
+
+        <!-- Daftar Transaksi -->
+        <div class="app-card transaction-list-card">
+            <h2 class="section-title">Riwayat Transaksi 📊</h2>
+            <div id="transaction-list">
+                <!-- Transaksi akan ditambahkan di sini oleh JavaScript -->
+                <p id="no-transactions-message" class="no-transactions-message">Belum ada transaksi.</p>
+            </div>
+        </div>
+
+        <div id="app-message-box" class="message-box hidden"></div>
+        <p class="warning-text">
+            PERINGATAN: Ini adalah DEMO. Meskipun data dienkripsi, gunakan solusi enkripsi dan penyimpanan kunci yang lebih kuat untuk data keuangan sensitif.
+        </p>
+    </div>
+
+    <!-- Modal Pengaturan -->
+    <div id="settings-modal-overlay" class="modal-overlay">
+        <div id="settings-modal-content" class="modal-content">
+            <h2 class="section-title text-center">Pengaturan Aplikasi ⚙️</h2>
+
+            <!-- Pengaturan Tema -->
+            <div class="setting-group">
+                <h3 class="setting-label">Tema Tampilan</h3>
+                <div class="flex-center-gap">
+                    <button id="modal-theme-toggle" class="button clear-button">
+                        ☀️ Mode Terang
+                    </button>
+                </div>
+            </div>
+
+            <!-- Kata Sandi Enkripsi -->
+            <div class="setting-group">
+                <h3 class="setting-label">Kata Sandi Enkripsi</h3>
+                <input type="password" id="modal-encryption-password" placeholder="Kata sandi enkripsi" class="input-field">
+                <p class="hint-text">Gunakan kata sandi yang sama untuk semua operasi data.</p>
+            </div>
+
+            <!-- Opsi Backup/Restore -->
+            <div class="button-group">
+                <button id="modal-backup-data-btn" class="button button-primary">
+                    📥 Download Backup (ZIP)
+                </button>
+                <label for="modal-restore-file-input" class="button button-secondary">
+                    <input type="file" id="modal-restore-file-input" accept=".zip">
+                    📤 Restore Data (ZIP)
+                </label>
+            </div>
+
+            <!-- Hapus Data Lokal -->
+            <button id="modal-clear-local-data-btn" class="button clear-button">
+                🗑️ Hapus Data Lokal
+            </button>
+
+            <div id="modal-message-box" class="message-box hidden"></div>
+
+            <button id="close-settings-modal" class="button clear-button">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- CDN untuk pustaka eksternal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
+    <!-- Link ke file JavaScript modular -->
+    <script type="module" src="js/dom.js"></script>
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/theme.js"></script>
+    <script type="module" src="js/data.js"></script>
+    <script type="module" src="js/modal.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
