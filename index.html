@@ -1,52 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Money Manager</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1 id="greeting">Halo, Pengguna!</h1>
-        </header>
-
-        <div class="balance-container">
-            <h2>Saldo Anda</h2>
-            <div id="balance">Rp0</div>
-        </div>
-
-        <div class="action-buttons">
-            <button id="add-income">Tambah Pemasukan</button>
-            <button id="add-expense">Tambah Pengeluaran</button>
-        </div>
-
-        <div class="history-container">
-            <h2>Riwayat Transaksi</h2>
-            <div id="history-list"></div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="transaction-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2 id="modal-title">Tambah Transaksi</h2>
-            <form id="transaction-form">
-                <div class="form-group">
-                    <label for="amount">Jumlah</label>
-                    <input type="number" id="amount" required>
-                </div>
-                <div class="form-group">
-                    <label for="description">Keterangan</label>
-                    <input type="text" id="description" required>
-                </div>
-                <button type="submit">Simpan</button>
-            </form>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+  
 </body>
 </html>
