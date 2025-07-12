@@ -1,4 +1,10 @@
-Aplikasi Manajer Keuangan KakeiboAplikasi Kakeibo sederhana berbasis web untuk membantu Anda melacak pemasukan dan pengeluaran. Aplikasi ini sepenuhnya berjalan di sisi klien (browser) dan menyediakan fitur backup serta restore data yang terenkripsi dalam format ZIP.FiturPencatatan Transaksi: Tambah pemasukan dan pengeluaran dengan deskripsi dan jumlah.Perhitungan Saldo: Saldo saat ini diperbarui secara real-time.Tema Monokromatik: Tampilan yang bersih dengan palet warna violet dan plum, dapat beralih antara mode terang dan gelap.Animasi Halus: Menggunakan GSAP untuk transisi UI yang dinamis dan menyenangkan.Penyimpanan Lokal: Data transaksi disimpan secara otomatis di localStorage browser Anda.Enkripsi Data: Semua data disimpan dan di-backup dalam bentuk terenkripsi menggunakan kata sandi yang Anda tentukan.Backup & Restore (ZIP):Unduh semua data transaksi Anda sebagai file ZIP yang berisi data terenkripsi.Unggah file ZIP backup untuk memulihkan data Anda di browser atau perangkat mana pun (membutuhkan kata sandi yang benar).Hapus Data Lokal: Opsi untuk menghapus semua data dari browser Anda (dengan konfirmasi).Antarmuka Bersih: Tombol pengaturan dipindahkan ke dalam modal popup untuk tampilan halaman utama yang minimalis.Struktur Proyekkakeibo-app/
+# Aplikasi Manajer Keuangan Kakeibo
+
+Aplikasi Kakeibo sederhana berbasis web untuk membantu Anda melacak pemasukan dan pengeluaran. Aplikasi ini sepenuhnya berjalan di sisi klien (browser) dan tidak memerlukan backend.
+
+## Struktur Folder
+
+```
 ├── index.html                # Halaman HTML utama aplikasi
 ├── css/
 │   └── style.css             # Semua gaya CSS kustom
@@ -9,6 +15,17 @@ Aplikasi Manajer Keuangan KakeiboAplikasi Kakeibo sederhana berbasis web untuk m
     ├── theme.js              # Logika pengelolaan tema
     ├── data.js               # Logika pengelolaan data (transaksi, saldo, localStorage)
     └── modal.js              # Logika pengelolaan modal pengaturan
-Cara Menjalankan AplikasiKlon Repositori:git clone https://github.com/YOUR_USERNAME/kakeibo-app.git
-cd kakeibo-app
-(Ganti YOUR_USERNAME dengan nama pengguna GitHub Anda jika Anda mengklon repositori Anda sendiri setelah mengunggahnya).Buka index.html:Cukup buka file index.html di browser web pilihan Anda (Chrome, Firefox, Edge, dll.). Tidak diperlukan server web lokal.PenggunaanMulai: Aplikasi akan memuat data dari localStorage jika ada dan kata sandi enkripsi tersimpan. Jika tidak, Anda akan memulai dengan Kakeibo kosong.Catat Transaksi: Gunakan formulir untuk menambah pemasukan atau pengeluaran. Data akan otomatis tersimpan.Pengaturan (⚙️): Klik ikon roda gigi di pojok kanan atas untuk membuka modal pengaturan.Tema Tampilan: Beralih antara mode terang dan gelap.Kata Sandi Enkripsi: Masukkan kata sandi yang akan digunakan untuk mengenkripsi data Anda. Ini penting untuk backup dan restore!Download Backup (ZIP): Unduh file .zip yang berisi data terenkripsi Anda. Simpan file ini di tempat yang aman.Restore Data (ZIP): Unggah file .zip backup Anda. Pastikan kata sandi enkripsi yang Anda masukkan benar. Data lama di browser akan dihapus dan diganti dengan data dari backup.Hapus Data Lokal: Hapus semua data transaksi dan kata sandi dari browser Anda. Gunakan dengan hati-hati!Peringatan KeamananAplikasi ini menggunakan enkripsi sisi klien untuk data Anda. Meskipun ini memberikan lapisan keamanan, ini adalah DEMO. Untuk data keuangan yang sangat sensitif, selalu pertimbangkan solusi enkripsi dan penyimpanan kunci yang lebih kuat, serta layanan backend yang aman.
+```
+
+## Cara Menjalankan Aplikasi
+
+1. **Klon repositori**
+   ```bash
+   git clone https://github.com/dayxnight/manager-kakeibo.git
+   cd manager-kakeibo
+   ```
+
+2. **Buka aplikasi**
+   - Cukup buka file `index.html` di browser web pilihan Anda (Chrome, Firefox, Edge, dll).
+
+---
