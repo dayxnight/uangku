@@ -1,120 +1,138 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajer Keuangan Kakeibo</title>
-    <!-- Link ke file CSS kustom -->
+    <title>Money Manager</title>
     <link rel="stylesheet" href="css/style.css">
-
-    <!-- CDN untuk pustaka eksternal -->
-    <!-- Penting: Pustaka ini harus dimuat sebelum skrip modular Anda -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
-    <!-- Tombol Pengaturan (Trigger Menu) -->
-    <div id="settings-toggle-container">
-        <button id="settings-toggle" class="button clear-button">
-            ⚙️
-        </button>
+    <div class="container">
+        <header>
+            <h1 id="greeting">Halo, Pengguna!</h1>
+            <button id="settings-btn" class="icon-btn">⚙️</button>
+        </header>
+
+        <div class="balance-container">
+            <h2>Saldo Anda</h2>
+            <div id="balance" class="amount">Rp0</div>
+        </div>
+
+        <div class="action-buttons">
+            <button id="add-income" class="btn">Tambah Pemasukan</button>
+            <button id="add-expense" class="btn">Tambah Pengeluaran</button>
+        </div>
+
+        <div class="history-container">
+            <h2>Riwayat Transaksi</h2>
+            <div id="history-list"></div>
+        </div>
     </div>
 
-    <!-- Layar Aplikasi Utama -->
-    <div id="app-screen" class="app-card">
-        <h1 class="main-title text-center">Kakeibo Saya 🌸</h1>
-
-        <!-- Area Saldo -->
-        <div class="balance-card">
-            <p class="balance-label">Saldo Saat Ini</p>
-            <p id="current-balance" class="balance-amount">Rp 0.00</p>
+    <!-- Modals -->
+    <div id="transaction-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-title">Tambah Transaksi</h2>
+            <form id="transaction-form">
+                <div class="form-group">
+                    <label for="amount">Jumlah</label>
+                    <input type="number" id="amount" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Keterangan</label>
+                    <input type="text" id="description" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Tanggal</label>
+                    <input type="date" id="date" required>
+                </div>
+                <button type="submit" class="btn">Simpan</button>
+            </form>
         </div>
-
-        <!-- Formulir Transaksi -->
-        <div class="app-card transaction-form-card">
-            <h2 class="section-title">Catat Transaksi 📝</h2>
-            <div class="input-group">
-                <label for="description" class="input-label">Deskripsi</label>
-                <input type="text" id="description" placeholder="Makan siang, Gaji, dll." class="input-field" required>
-            </div>
-            <div class="input-group">
-                <label for="amount" class="input-label">Jumlah (Rp)</label>
-                <input type="number" id="amount" placeholder="Contoh: 50000" class="input-field" required min="0">
-            </div>
-            <div class="button-group">
-                <button id="add-income" class="button button-primary">
-                    <span>➕</span> Tambah Pemasukan
-                </button>
-                <button id="add-expense" class="button button-secondary">
-                    <span>➖</span> Tambah Pengeluaran
-                </button>
-            </div>
-        </div>
-
-        <!-- Daftar Transaksi -->
-        <div class="app-card transaction-list-card">
-            <h2 class="section-title">Riwayat Transaksi 📊</h2>
-            <div id="transaction-list">
-                <!-- Transaksi akan ditambahkan di sini oleh JavaScript -->
-                <p id="no-transactions-message" class="no-transactions-message">Belum ada transaksi.</p>
-            </div>
-        </div>
-
-        <div id="app-message-box" class="message-box hidden"></div>
-        <p class="warning-text">
-            PERINGATAN: Ini adalah DEMO. Meskipun data dienkripsi, gunakan solusi enkripsi dan penyimpanan kunci yang lebih kuat untuk data keuangan sensitif.
-        </p>
     </div>
 
-    <!-- Modal Pengaturan -->
-    <div id="settings-modal-overlay" class="modal-overlay">
-        <div id="settings-modal-content" class="modal-content">
-            <h2 class="section-title text-center">Pengaturan Aplikasi ⚙️</h2>
-
-            <!-- Pengaturan Tema -->
-            <div class="setting-group">
-                <h3 class="setting-label">Tema Tampilan</h3>
-                <div class="flex-center-gap">
-                    <button id="modal-theme-toggle" class="button clear-button">
-                        ☀️ Mode Terang
-                    </button>
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Pengaturan</h2>
+            <div class="settings-option">
+                <label>Tema</label>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <label for="theme-toggle" class="toggle-label">
+                        <span class="toggle-text">Gelap</span>
+                        <span class="toggle-handle"></span>
+                        <span class="toggle-text">Terang</span>
+                    </label>
                 </div>
             </div>
-
-            <!-- Kata Sandi Enkripsi -->
-            <div class="setting-group">
-                <h3 class="setting-label">Kata Sandi Enkripsi</h3>
-                <input type="password" id="modal-encryption-password" placeholder="Kata sandi enkripsi" class="input-field">
-                <p class="hint-text">Gunakan kata sandi yang sama untuk semua operasi data.</p>
+            <div class="settings-option">
+                <button id="backup-btn" class="btn">Backup Data</button>
             </div>
-
-            <!-- Opsi Backup/Restore -->
-            <div class="button-group">
-                <button id="modal-backup-data-btn" class="button button-primary">
-                    📥 Download Backup (ZIP)
-                </button>
-                <label for="modal-restore-file-input" class="button button-secondary">
-                    <input type="file" id="modal-restore-file-input" accept=".zip">
-                    📤 Restore Data (ZIP)
-                </label>
+            <div class="settings-option">
+                <button id="restore-btn" class="btn">Restore Data</button>
+                <input type="file" id="restore-file" accept=".json" style="display: none;">
             </div>
-
-            <!-- Hapus Data Lokal -->
-            <button id="modal-clear-local-data-btn" class="button clear-button">
-                🗑️ Hapus Data Lokal
-            </button>
-
-            <div id="modal-message-box" class="message-box hidden"></div>
-
-            <button id="close-settings-modal" class="button clear-button">
-                Tutup
-            </button>
+            <div class="settings-option">
+                <button id="reset-btn" class="btn danger">Reset Data</button>
+            </div>
         </div>
     </div>
 
-    <!-- Link ke file JavaScript utama modular -->
-    <!-- Cukup muat app.js saja, yang akan mengelola impor modul lainnya -->
-    <script type="module" src="js/app.js"></script>
+    <div id="backup-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Backup Data</h2>
+            <div class="form-group">
+                <label for="backup-password">Password</label>
+                <input type="password" id="backup-password" required>
+            </div>
+            <div class="form-group">
+                <label for="backup-password-confirm">Konfirmasi Password</label>
+                <input type="password" id="backup-password-confirm" required>
+            </div>
+            <button id="generate-backup" class="btn">Generate Backup</button>
+            <div id="backup-result" class="hidden">
+                <p>Backup berhasil dibuat. Salin teks di bawah ini:</p>
+                <textarea id="backup-data" readonly></textarea>
+                <button id="copy-backup" class="btn">Salin ke Clipboard</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="restore-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Restore Data</h2>
+            <div class="form-group">
+                <label for="restore-password">Password</label>
+                <input type="password" id="restore-password" required>
+            </div>
+            <div class="form-group">
+                <label for="restore-data">Data Backup</label>
+                <textarea id="restore-data" required></textarea>
+            </div>
+            <button id="confirm-restore" class="btn">Restore Data</button>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h2>Konfirmasi</h2>
+            <p id="confirm-message">Anda yakin ingin menghapus semua data?</p>
+            <div class="confirm-buttons">
+                <button id="confirm-cancel" class="btn">Batal</button>
+                <button id="confirm-ok" class="btn danger">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
