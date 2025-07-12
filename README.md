@@ -27,5 +27,6 @@ Aplikasi Kakeibo sederhana berbasis web untuk membantu Anda melacak pemasukan da
 
 2. **Buka aplikasi**
    - Cukup buka file `index.html` di browser web pilihan Anda (Chrome, Firefox, Edge, dll).
+   - atau bisa juga akses melalui github page saya di https://dayxnight.github.io/manager-kakeibo/
 
 ---
