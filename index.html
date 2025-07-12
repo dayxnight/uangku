@@ -6,6 +6,12 @@
     <title>Manajer Keuangan Kakeibo</title>
     <!-- Link ke file CSS kustom -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- CDN untuk pustaka eksternal -->
+    <!-- Penting: Pustaka ini harus dimuat sebelum skrip modular Anda -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 </head>
 <body>
     <!-- Tombol Pengaturan (Trigger Menu) -->
@@ -107,17 +113,8 @@
         </div>
     </div>
 
-    <!-- CDN untuk pustaka eksternal -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-
-    <!-- Link ke file JavaScript modular -->
-    <script type="module" src="js/dom.js"></script>
-    <script type="module" src="js/utils.js"></script>
-    <script type="module" src="js/theme.js"></script>
-    <script type="module" src="js/data.js"></script>
-    <script type="module" src="js/modal.js"></script>
+    <!-- Link ke file JavaScript utama modular -->
+    <!-- Cukup muat app.js saja, yang akan mengelola impor modul lainnya -->
     <script type="module" src="js/app.js"></script>
 </body>
 </html>
