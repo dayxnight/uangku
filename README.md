@@ -11,10 +11,8 @@ Aplikasi Kakeibo sederhana berbasis web untuk membantu Anda melacak pemasukan da
 └── js/
     ├── app.js                # Logika aplikasi utama dan event listener
     ├── utils.js              # Fungsi utilitas (enkripsi, dekripsi, pesan)
-    ├── dom.js                # Referensi elemen DOM
-    ├── theme.js              # Logika pengelolaan tema
-    ├── data.js               # Logika pengelolaan data (transaksi, saldo, localStorage)
-    └── modal.js              # Logika pengelolaan modal pengaturan
+    ├── ui.js              # Logika pengelolaan ui
+    ├── storage.js               # Logika pengelolaan data (transaksi, saldo, localStorage)
 ```
 
 ## Cara Menjalankan Aplikasi
