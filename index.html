@@ -3,46 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uangku - Money Manager</title>
+    <title>Kakeibo Money Manager</title>
     <style>
+
         * {
+
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+
+            --primary: #6366f1;
+
+            --secondary: #8b5cf6;
+
+            --accent: #06d6a0;
+
+            --danger: #ef4444;
+
+            --warning: #f59e0b;
+
+            --dark: #1e293b;
+
+            --light: #f8fafc;
+
+            --gray: #64748b;
+
+            --card-bg: #ffffff;
+
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
-            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            color: var(--dark);
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 500px;
+            max-width: 480px;
             margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
         }
 
-        .header {
+        .app-header {
             text-align: center;
+            color: white;
             margin-bottom: 30px;
+            animation: fadeIn 0.5s ease;
         }
 
-        .header h1 {
-            font-size: 32px;
-            background: linear-gradient(45deg, #ff006e, #8338ec);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .app-title {
+            font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #e0e7ff);
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+        }
+
+        .app-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.5s ease;
         }
 
         .balance-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
@@ -55,117 +102,220 @@
             width: 200%;
             height: 200%;
             background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: shimmer 3s infinite;
+            animation: rotate 20s linear infinite;
         }
 
-        @keyframes shimmer {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .balance-label {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-bottom: 5px;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .balance-amount {
-            font-size: 36px;
-            font-weight: bold;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            position: relative;
+            z-index: 1;
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 10px;
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
             margin-bottom: 20px;
         }
 
-        .btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
+        .category-card {
+            background: var(--card-bg);
             border-radius: 15px;
-            font-size: 16px;
+            padding: 20px;
+            text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: bold;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-card.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .category-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        .category-amount {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+
+        .transaction-form {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #ff006e, #8338ec);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--light);
+            color: var(--dark);
+            border: 2px solid #e2e8f0;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        .btn-danger {
+            background: var(--danger);
+            color: white;
         }
 
         .transaction-list {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
         }
 
         .transaction-item {
             display: flex;
+            justify-content: space-between;
             align-items: center;
             padding: 15px;
             margin-bottom: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            transition: all 0.3s ease;
+            background: var(--light);
+            border-radius: 12px;
+            animation: slideIn 0.3s ease;
         }
 
-        .transaction-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(5px);
-        }
-
-        .transaction-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-right: 15px;
-        }
-
-        .transaction-details {
+        .transaction-info {
             flex: 1;
         }
 
-        .transaction-title {
-            font-weight: bold;
+        .transaction-category {
+            font-size: 0.9rem;
+            color: var(--gray);
             margin-bottom: 5px;
         }
 
+        .transaction-description {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
         .transaction-date {
-            font-size: 12px;
-            opacity: 0.6;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 5px;
         }
 
         .transaction-amount {
-            font-weight: bold;
-            font-size: 18px;
+            font-weight: 700;
+            font-size: 1.2rem;
         }
 
-        .income {
-            color: #00ff88;
+        .transaction-amount.expense {
+            color: var(--danger);
         }
 
-        .expense {
-            color: #ff006e;
+        .transaction-amount.income {
+            color: var(--accent);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .nav-label {
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
         .modal {
@@ -175,9 +325,67 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
             animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 30px;
+            animation: slideUp 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s ease;
         }
 
         @keyframes fadeIn {
@@ -185,217 +393,275 @@
             to { opacity: 1; }
         }
 
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            animation: slideUp 0.3s ease;
-        }
-
         @keyframes slideUp {
-            from {
-                transform: translate(-50%, -60%);
-                opacity: 0;
-            }
-            to {
-                transform: translate(-50%, -50%);
-                opacity: 1;
-            }
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .modal-header {
-            margin-bottom: 20px;
-            text-align: center;
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            font-size: 16px;
-        }
-
-        .form-group input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            opacity: 0.5;
-        }
-
-        .empty-state img {
-            width: 100px;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
-
-        .export-import {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .export-import .btn {
-            flex: 1;
-            font-size: 14px;
-            padding: 10px;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .transaction-icon.income { background: rgba(0, 255, 136, 0.2); }
-        .transaction-icon.expense { background: rgba(255, 0, 110, 0.2); }
-
+        /* Responsive */
         @media (max-width: 480px) {
-            body {
-                padding: 10px;
+            .container {
+                padding: 15px;
+            }
+            
+            .app-title {
+                font-size: 2rem;
             }
             
             .balance-amount {
-                font-size: 28px;
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Uangku 💰</h1>
-            <p>Kelola keuanganmu dengan style</p>
+        <div class="app-header">
+            <h1 class="app-title">💰 Kakeibo</h1>
+            <p class="app-subtitle">Kelola keuanganmu dengan gaya</p>
         </div>
 
-        <div class="balance-card">
-            <div class="balance-label">Total Saldo</div>
+        <div class="card balance-card">
+            <h3>Total Balance</h3>
             <div class="balance-amount" id="totalBalance">Rp 0</div>
+            <p>Bulan ini</p>
         </div>
 
-        <div class="action-buttons">
-            <button class="btn btn-primary" onclick="openModal('income')">
-                💸 Pemasukan
-            </button>
-            <button class="btn btn-secondary" onclick="openModal('expense')">
-                💳 Pengeluaran
+        <div class="card" id="homeScreen">
+            <h3 style="margin-bottom: 20px;">Kategori Pengeluaran</h3>
+            <div class="category-grid">
+                <div class="category-card" onclick="showTransactionForm('needs')">
+                    <div class="category-icon">🍔</div>
+                    <div class="category-name">Needs</div>
+                    <div class="category-amount" id="needsAmount">Rp 0</div>
+                </div>
+                <div class="category-card" onclick="showTransactionForm('wants')">
+                    <div class="category-icon">🎮</div>
+                    <div class="category-name">Wants</div>
+                    <div class="category-amount" id="wantsAmount">Rp 0</div>
+                </div>
+                <div class="category-card" onclick="showTransactionForm('culture')">
+                    <div class="category-icon">🎭</div>
+                    <div class="category-name">Culture</div>
+                    <div class="category-amount" id="cultureAmount">Rp 0</div>
+                </div>
+                <div class="category-card" onclick="showTransactionForm('unexpected')">
+                    <div class="category-icon">⚡</div>
+                    <div class="category-name">Unexpected</div>
+                    <div class="category-amount" id="unexpectedAmount">Rp 0</div>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="showTransactionForm('income')">
+                💵 Tambah Pemasukan
             </button>
         </div>
 
-        <div class="transaction-list">
+        <div class="card transaction-form" id="transactionForm">
+            <h3 style="margin-bottom: 20px;">Tambah Transaksi</h3>
+            <div class="form-group">
+                <label>Jenis Transaksi</label>
+                <select id="transactionType">
+                    <option value="expense">Pengeluaran</option>
+                    <option value="income">Pemasukan</option>
+                </select>
+            </div>
+            <div class="form-group" id="categoryGroup">
+                <label>Kategori</label>
+                <select id="category">
+                    <option value="needs">Needs</option>
+                    <option value="wants">Wants</option>
+                    <option value="culture">Culture</option>
+                    <option value="unexpected">Unexpected</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Jumlah</label>
+                <input type="number" id="amount" placeholder="Rp 0" min="0">
+            </div>
+            <div class="form-group">
+                <label>Deskripsi</label>
+                <input type="text" id="description" placeholder="Contoh: Makan siang">
+            </div>
+            <button class="btn btn-primary" onclick="addTransaction()">Simpan</button>
+            <button class="btn btn-secondary" onclick="hideTransactionForm()">Batal</button>
+        </div>
+
+        <div class="card" id="transactionsScreen" style="display: none;">
             <h3 style="margin-bottom: 20px;">Riwayat Transaksi</h3>
-            <div id="transactionList">
+            <div class="transaction-list" id="transactionList">
                 <div class="empty-state">
-                    <div style="font-size: 48px;">📊</div>
-                    <p>Belum ada transaksi nih</p>
-                    <p style="font-size: 12px;">Yuk mulai catat keuanganmu!</p>
+                    <div class="empty-icon">📊</div>
+                    <p>Belum ada transaksi</p>
                 </div>
             </div>
         </div>
 
-        <div class="export-import">
+        <div class="card" id="settingsScreen" style="display: none;">
+            <h3 style="margin-bottom: 20px;">Pengaturan</h3>
             <button class="btn btn-secondary" onclick="exportData()">
                 📤 Backup Data
             </button>
             <button class="btn btn-secondary" onclick="importData()">
                 📥 Restore Data
             </button>
-            <input type="file" id="fileInput" accept=".txt" onchange="handleFileImport(event)">
+            <button class="btn btn-danger" onclick="resetData()">
+                🗑️ Hapus Semua Data
+            </button>
+            <input type="file" id="fileInput" accept=".txt" style="display: none;" onchange="handleFileImport(event)">
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal" id="transactionModal">
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showScreen('home')">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </div>
+        <div class="nav-item" onclick="showScreen('transactions')">
+            <div class="nav-icon">📋</div>
+            <div class="nav-label">Transaksi</div>
+        </div>
+        <div class="nav-item" onclick="showScreen('settings')">
+            <div class="nav-icon">⚙️</div>
+            <div class="nav-label">Settings</div>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalTitle">Tambah Transaksi</h2>
+                <h2 class="modal-title">Konfirmasi</h2>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
             </div>
-            <form id="transactionForm">
-                <div class="form-group">
-                    <label>Nominal</label>
-                    <input type="number" id="amount" placeholder="0" required>
-                </div>
-                <div class="form-group">
-                    <label>Kategori</label>
-                    <select id="category" required>
-                        <option value="">Pilih kategori</option>
-                        <option value="Makanan">🍔 Makanan</option>
-                        <option value="Transportasi">🚗 Transportasi</option>
-                        <option value="Belanja">🛍️ Belanja</option>
-                        <option value="Hiburan">🎮 Hiburan</option>
-                        <option value="Gaji">💼 Gaji</option>
-                        <option value="Lainnya">📌 Lainnya</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Deskripsi</label>
-                    <input type="text" id="description" placeholder="Contoh: Jajan seblak" required>
-                </div>
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button type="submit" class="btn btn-primary" style="flex: 1;">Simpan</button>
-                    <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeModal()">Batal</button>
-                </div>
-            </form>
+            <p id="confirmMessage">Apakah kamu yakin?</p>
+            <button class="btn btn-danger" onclick="confirmAction()">Ya, lanjutkan</button>
+            <button class="btn btn-secondary" onclick="closeModal()">Batal</button>
         </div>
     </div>
-
     <script>
-        let transactions = JSON.parse(localStorage.getItem('walletData')) || [];
-        let currentType = 'income';
+        let transactions = [];
+        let currentScreen = 'home';
+        let confirmCallback = null;
 
-        function formatRupiah(amount) {
-            return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        // Load data dari localStorage
+        function loadData() {
+            const saved = localStorage.getItem('kakeiboData');
+            if (saved) {
+                transactions = JSON.parse(saved);
+            }
+            updateDisplay();
         }
 
-        function updateBalance() {
-            const total = transactions.reduce((sum, t) => {
+        // Save data ke localStorage
+        function saveData() {
+            localStorage.setItem('kakeiboData', JSON.stringify(transactions));
+            updateDisplay();
+        }
+
+        // Update tampilan
+        function updateDisplay() {
+            const totalBalance = transactions.reduce((sum, t) => {
                 return sum + (t.type === 'income' ? t.amount : -t.amount);
             }, 0);
-            document.getElementById('totalBalance').textContent = formatRupiah(total);
+
+            document.getElementById('totalBalance').textContent = formatRupiah(totalBalance);
+
+            // Update kategori amounts
+            const categories = ['needs', 'wants', 'culture', 'unexpected'];
+            categories.forEach(cat => {
+                const amount = transactions
+                    .filter(t => t.type === 'expense' && t.category === cat)
+                    .reduce((sum, t) => sum + t.amount, 0);
+                document.getElementById(cat + 'Amount').textContent = formatRupiah(amount);
+            });
+
+            // Update transaksi list
+            updateTransactionList();
         }
 
-        function renderTransactions() {
+        // Format Rupiah
+        function formatRupiah(angka) {
+            return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Tampilkan form transaksi
+        function showTransactionForm(category = null) {
+            document.getElementById('homeScreen').style.display = 'none';
+            document.getElementById('transactionForm').style.display = 'block';
+            
+            if (category === 'income') {
+                document.getElementById('transactionType').value = 'income';
+                document.getElementById('categoryGroup').style.display = 'none';
+            } else {
+                document.getElementById('transactionType').value = 'expense';
+                document.getElementById('categoryGroup').style.display = 'block';
+                if (category) {
+                    document.getElementById('category').value = category;
+                }
+            }
+        }
+
+        // Sembunyikan form transaksi
+        function hideTransactionForm() {
+            document.getElementById('transactionForm').style.display = 'none';
+            document.getElementById('homeScreen').style.display = 'block';
+            document.getElementById('amount').value = '';
+            document.getElementById('description').value = '';
+        }
+
+        // Tambah transaksi baru
+        function addTransaction() {
+            const type = document.getElementById('transactionType').value;
+            const category = type === 'income' ? 'income' : document.getElementById('category').value;
+            const amount = parseInt(document.getElementById('amount').value);
+            const description = document.getElementById('description').value;
+
+            if (!amount || !description) {
+                alert('Mohon isi semua field!');
+                return;
+            }
+
+            const transaction = {
+                id: Date.now(),
+                type,
+                category,
+                amount,
+                description,
+                date: new Date().toISOString()
+            };
+
+            transactions.unshift(transaction);
+            saveData();
+            hideTransactionForm();
+            
+            // Animasi tambah transaksi
+            showNotification('Transaksi berhasil ditambahkan! ✨');
+        }
+
+        // Update list transaksi
+        function updateTransactionList() {
             const list = document.getElementById('transactionList');
             
             if (transactions.length === 0) {
                 list.innerHTML = `
                     <div class="empty-state">
-                        <div style="font-size: 48px;">📊</div>
-                        <p>Belum ada transaksi nih</p>
-                        <p style="font-size: 12px;">Yuk mulai catat keuanganmu!</p>
+                        <div class="empty-icon">📊</div>
+                        <p>Belum ada transaksi</p>
                     </div>
                 `;
                 return;
             }
 
-            list.innerHTML = transactions.map((t, index) => `
+            list.innerHTML = transactions.map(t => `
                 <div class="transaction-item">
-                    <div class="transaction-icon ${t.type}">
-                        ${t.type === 'income' ? '💸' : '💳'}
-                    </div>
-                    <div class="transaction-details">
-                        <div class="transaction-title">${t.description}</div>
-                        <div class="transaction-date">${t.date} • ${t.category}</div>
+                    <div class="transaction-info">
+                        <div class="transaction-category">${getCategoryEmoji(t.category)} ${t.category.toUpperCase()}</div>
+                        <div class="transaction-description">${t.description}</div>
+                        <div class="transaction-date">${new Date(t.date).toLocaleDateString('id-ID')}</div>
                     </div>
                     <div class="transaction-amount ${t.type}">
                         ${t.type === 'income' ? '+' : '-'} ${formatRupiah(t.amount)}
@@ -404,52 +670,63 @@
             `).join('');
         }
 
-        function openModal(type) {
-            currentType = type;
-            document.getElementById('modalTitle').textContent = 
-                type === 'income' ? 'Tambah Pemasukan' : 'Tambah Pengeluaran';
-            document.getElementById('transactionModal').style.display = 'block';
-        }
-
-        function closeModal() {
-            document.getElementById('transactionModal').style.display = 'none';
-            document.getElementById('transactionForm').reset();
-        }
-
-        document.getElementById('transactionForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const transaction = {
-                type: currentType,
-                amount: parseInt(document.getElementById('amount').value),
-                category: document.getElementById('category').value,
-                description: document.getElementById('description').value,
-                date: new Date().toLocaleDateString('id-ID', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric'
-                })
+        // Get emoji untuk kategori
+        function getCategoryEmoji(category) {
+            const emojis = {
+                needs: '🍔',
+                wants: '🎮',
+                culture: '🎭',
+                unexpected: '⚡',
+                income: '💵'
             };
-            
-            transactions.unshift(transaction);
-            localStorage.setItem('walletData', JSON.stringify(transactions));
-            
-            updateBalance();
-            renderTransactions();
-            closeModal();
-        });
+            return emojis[category] || '📝';
+        }
 
+        // Ganti layar
+        function showScreen(screen) {
+            currentScreen = screen;
+            
+            // Sembunyikan semua layar
+            document.getElementById('homeScreen').style.display = 'none';
+            document.getElementById('transactionForm').style.display = 'none';
+            document.getElementById('transactionsScreen').style.display = 'none';
+            document.getElementById('settingsScreen').style.display = 'none';
+            
+            // Tampilkan layar yang dipilih
+            switch(screen) {
+                case 'home':
+                    document.getElementById('homeScreen').style.display = 'block';
+                    break;
+                case 'transactions':
+                    document.getElementById('transactionsScreen').style.display = 'block';
+                    break;
+                case 'settings':
+                    document.getElementById('settingsScreen').style.display = 'block';
+                    break;
+            }
+            
+            // Update active nav
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            event.target.closest('.nav-item').classList.add('active');
+        }
+
+        // Export data
         function exportData() {
-            const data = localStorage.getItem('walletData');
-            const blob = new Blob([data], { type: 'text/plain' });
+            const data = {
+                transactions: transactions,
+                exportDate: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `WalletKita-Backup-${new Date().toISOString().split('T')[0]}.txt`;
+            a.download = `kakeibo-backup-${new Date().toLocaleDateString('id-ID').replace(/\//g, '-')}.txt`;
             a.click();
             URL.revokeObjectURL(url);
+            showNotification('Data berhasil di-backup! 📤');
         }
 
+        // Import data
         function importData() {
             document.getElementById('fileInput').click();
         }
@@ -459,37 +736,87 @@
             if (!file) return;
             
             const reader = new FileReader();
-            reader.onload = (e) => {
+            reader.onload = function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
-                    if (Array.isArray(data)) {
-                        transactions = data;
-                        localStorage.setItem('walletData', JSON.stringify(transactions));
-                        updateBalance();
-                        renderTransactions();
-                        alert('Data berhasil direstore! 🎉');
+                    if (data.transactions && Array.isArray(data.transactions)) {
+                        showConfirmModal('Import akan menimpa data lama. Lanjutkan?', () => {
+                            transactions = data.transactions;
+                            saveData();
+                            showNotification('Data berhasil di-restore! 📥');
+                        });
                     } else {
-                        alert('Format file tidak valid!');
+                        alert('File tidak valid!');
                     }
                 } catch (error) {
-                    alert('Gagal membaca file backup!');
+                    alert('Error membaca file!');
                 }
-                event.target.value = '';
             };
             reader.readAsText(file);
+            event.target.value = '';
         }
 
-        // Close modal when clicking outside
-        window.onclick = (event) => {
-            const modal = document.getElementById('transactionModal');
-            if (event.target === modal) {
+        // Reset data
+        function resetData() {
+            showConfirmModal('Hapus semua data? Tindakan ini tidak bisa dibatalkan!', () => {
+                transactions = [];
+                saveData();
+                showNotification('Semua data telah dihapus! 🗑️');
+            });
+        }
+        // Modal konfirmasi
+        function showConfirmModal(message, callback) {
+            document.getElementById('confirmMessage').textContent = message;
+            document.getElementById('confirmModal').style.display = 'block';
+            confirmCallback = callback;
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+            confirmCallback = null;
+        }
+
+        function confirmAction() {
+            if (confirmCallback) {
+                confirmCallback();
                 closeModal();
             }
         }
 
-        // Initialize
-        updateBalance();
-        renderTransactions();
+        // Notifikasi
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 12px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1001;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Init
+        loadData();
+
+        // Click outside modal to close
+        window.onclick = function(event) {
+            const modal = document.getElementById('confirmModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
     </script>
 </body>
-                            </html>
+</html>
