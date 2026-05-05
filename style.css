@@ -273,3 +273,12 @@ body {
     transform: scale(1.1);
     transition: transform 0.3s ease-in-out;
 }
+.menu-button.delete-all {
+    background: var(--error-container);
+    color: var(--on-error-container) !important;
+}
+
+.menu-button.delete-all .material-symbols-rounded {
+    color: var(--error);
+}
+

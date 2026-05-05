@@ -42,13 +42,12 @@ themeToggle.addEventListener("click", () => {
     closeOverlay(menuOverlay, ".menu-window"); // Menutup dengan animasi GSAP
 });
 
-
 // --- LOGIKA ANIMASI GSAP (Helper Functions) ---
 
 // Fungsi untuk membuka overlay
 function openOverlay(overlay, contentSelector) {
     const content = overlay.querySelector(contentSelector);
-    
+
     // Siapkan kondisi awal (gaib)
     overlay.style.display = "flex";
     gsap.set(overlay, { opacity: 0 });
@@ -56,12 +55,12 @@ function openOverlay(overlay, contentSelector) {
 
     // Jalankan animasi masuk
     gsap.to(overlay, { opacity: 1, duration: 0.3 });
-    gsap.to(content, { 
-        opacity: 1, 
-        scale: 1, 
-        y: 0, 
-        duration: 0.5, 
-        ease: "back.out(1.7)" 
+    gsap.to(content, {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "back.out(1.7)"
     });
 }
 
@@ -70,23 +69,22 @@ function closeOverlay(overlay, contentSelector) {
     const content = overlay.querySelector(contentSelector);
 
     // Jalankan animasi keluar
-    gsap.to(content, { 
-        opacity: 0, 
-        scale: 0.8, 
-        y: 30, 
-        duration: 0.3, 
-        ease: "power2.in" 
+    gsap.to(content, {
+        opacity: 0,
+        scale: 0.8,
+        y: 30,
+        duration: 0.3,
+        ease: "power2.in"
     });
-    
-    gsap.to(overlay, { 
-        opacity: 0, 
-        duration: 0.3, 
+
+    gsap.to(overlay, {
+        opacity: 0,
+        duration: 0.3,
         onComplete: () => {
             overlay.style.display = "none"; // Baru di-hide setelah animasi selesai
         }
     });
 }
-
 
 // --- LOGIKA TRANSAKSI ---
 
@@ -94,7 +92,7 @@ function showPopUp(type) {
     currentType = type;
     // Buka dengan animasi GSAP
     openOverlay(popupOverlay, ".modal");
-    
+
     modalHeader.innerText =
         type === "masuk" ? "Tambah Pemasukan" : "Catat Pengeluaran";
     document.getElementById("input-value").value = "";
@@ -168,7 +166,6 @@ function saveAndRender() {
     sisaSaldo.innerText = `Rp ${total.toLocaleString()}`;
 }
 
-
 // --- LOGIKA EXPORT & IMPORT ---
 
 // 1. Mengambil elemen tombol dari HTML
@@ -193,7 +190,6 @@ exportBtn.addEventListener("click", () => {
     closeOverlay(menuOverlay, ".menu-window");
     alert("Data berhasil diekspor!");
 });
-
 
 // --- LOGIKA IMPORT (VERSI STABIL MOBILE) ---
 
@@ -226,7 +222,7 @@ fileInputHidden.addEventListener("change", processFile);
 
 importBtn.addEventListener("click", () => {
     console.log("Membuka file picker...");
-    
+
     // Tutup menu dengan animasi dulu
     closeOverlay(menuOverlay, ".menu-window");
 
@@ -236,3 +232,35 @@ importBtn.addEventListener("click", () => {
 
 // Jalankan fungsi render pertama kali
 saveAndRender();
+
+// Tambahkan kode registrasi PWA di bawah sini
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+            .register("/sw.js")
+            .then(reg => console.log("Service Worker terdaftar!", reg))
+            .catch(err => console.log("Gagal daftar:", err));
+    });
+}
+
+// --- LOGIKA HAPUS SEMUA DATA ---
+
+const deleteAllBtn = document.getElementById("delete-all");
+
+deleteAllBtn.addEventListener("click", () => {
+    // 1. Berikan konfirmasi ke pengguna
+    const isConfirmed = confirm("Apakah Anda yakin ingin menghapus seluruh riwayat transaksi? Tindakan ini tidak bisa dibatalkan.");
+
+    if (isConfirmed) {
+        // 2. Kosongkan array transactions
+        transactions = [];
+
+        // 3. Simpan perubahan ke LocalStorage & Update UI
+        saveAndRender();
+
+        // 4. Tutup menu dengan animasi GSAP
+        closeOverlay(menuOverlay, ".menu-window");
+
+        alert("Semua data telah dibersihkan! ✨");
+    }
+});
