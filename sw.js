@@ -7,7 +7,9 @@ const urlsToCache = [
     "/theme.css",
     "/theme-dark.css",
     "/icon-192.png", // Tambahkan ini
-    "/icon-512.png" // Tambahkan ini
+    "/icon-512.png", // Tambahkan ini
+    "https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js",
+    "https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
 ];
 
 // Install Service Worker
