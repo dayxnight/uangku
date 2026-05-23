@@ -36,7 +36,7 @@ uangku/
 
 ### Metode 2: Akses Online
 Atau akses aplikasi melalui GitHub Pages:
-🔗 **https://dayxnight.github.io/uangku/**
+🔗 **https://tegar-izo.github.io/uangku/**
 
 ## 💡 Cara Kerja
 
